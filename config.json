@@ -2,7 +2,7 @@
   "prefix": "Votre Prefix",
   "readyMessage": "Connecté en tant que ${client.user.tag} !",
   "ticketRoles": { "role1": "Rôle 1 en ticket / définissez l'id du rôle", "role2": "Rôle 2 en ticket / définissez l'id du rôle" },
-  "commandePermissionRole": "ID du rôle permetant d'utiliser les commande.",
+  "commandePermissionRole": "ID du rôle permetant d'utiliser les commandes.",
   "blacklistMessage": "Vous êtes dans la liste noire et vous ne pouvez pas ouvrir un ticket.",
   "ticketOuvertMessage": "Vous avez déjà un ticket ouvert !",
   "ticketCreationMessage": "Création du ticket réussie ! Le ticket a été créé dans le canal ${ticketChannelMention}.",
