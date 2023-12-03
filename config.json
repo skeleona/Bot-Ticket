@@ -1,0 +1,15 @@
+{
+  "prefix": "Votre Prefix",
+  "readyMessage": "Connecté en tant que ${client.user.tag} !",
+  "ticketRoles": { "role1": "Rôle 1 en ticket / définissez l'id du rôle", "role2": "Rôle 2 en ticket / définissez l'id du rôle" },
+  "commandePermissionRole": "ID du rôle permetant d'utiliser les commande.",
+  "blacklistMessage": "Vous êtes dans la liste noire et vous ne pouvez pas ouvrir un ticket.",
+  "ticketOuvertMessage": "Vous avez déjà un ticket ouvert !",
+  "ticketCreationMessage": "Création du ticket réussie ! Le ticket a été créé dans le canal ${ticketChannelMention}.",
+  "EmbedOuvrir": { "color": "#00ff00", "title": "Ouvrir un ticket", "description": "Cliquez sur sur le bouton ci-dessous pour créer un ticket." },
+  "EmbedTicket": { "color": "#ffcc00", "title": "Ticket Ouvert", "description": "Un membre du personnel va bientôt vous aider. Merci de patienter." },
+  "logChannelOuvert": "Le channel logs où vous voulez envoyer les tickets a été ouvert.",
+  "logChannelFermé": "Le channel logs où vous voulez envoyer les tickets a été fermé.",
+  "parentCatégorie": "ID de la catégorie où vous voulez envoyer les tickets.",
+  "token": "Votre token"
+}
