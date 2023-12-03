@@ -1,19 +1,17 @@
-Bot Ticket Discord
+Bot Ticket Discord 🎫
 
-Solution conviviale pour gérer les demandes de support sur Discord. Boutons intuitifs via config.json. Expérience utilisateur fluide.
+Une solution conviviale pour gérer les demandes de support sur Discord. Des boutons intuitifs via config.json offrent une expérience utilisateur fluide.
 
 Utilisation :
 
-npm init
+👉 npm init
 
-npm install discord.js@13 fs path
+👉 npm install discord.js@13 fs path
 
-node leona.js
+👉 node leona.js
 
 Fonctionnalités :
 
-Pour ouvrir un ticket un simple clic sur le bouton
-Blacklist d'utilisateurs par ID
+✨ Pour ouvrir un ticket, un simple clic sur le bouton "Blacklist d'utilisateurs par ID."
 
-Commandes :
-Configuré le prefix dans le config.json pour que les commandes fonctionne : ticketsetup, blacklist, unblacklist.
+Commandes : Configurez le préfixe dans le config.json pour que les commandes fonctionnent : ticketsetup, blacklist, unblacklist. 🛠️
