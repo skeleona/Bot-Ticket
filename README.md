@@ -5,6 +5,7 @@ Solution conviviale pour gérer les demandes de support sur Discord. Boutons int
 Utilisation :
 
 npm install discord.js@13 fs path
+
 node leona.js
 
 Fonctionnalités :
