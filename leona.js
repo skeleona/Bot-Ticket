@@ -20,7 +20,7 @@ client.once('ready', () => {
   loadBlacklist();
 });
 
-function createErrorEmbed(title, description, extraMessage) {
+function createErreurEmbed(title, description, extraMessage) {
   return {
     color: 0xff0000, 
     title: title,
