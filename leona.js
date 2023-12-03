@@ -137,7 +137,7 @@ client.on('messageCreate', async (message) => {
     message.delete();
 
     const row = new MessageActionRow().addComponents(
-      new MessageButton().setCustomId('aide').setLabel('❓ | Besoin d\'aide').setStyle('SUCCESS')
+      new MessageButton().setCustomId('aide').setLabel('❓ | Ouvrir un ticket').setStyle('SUCCESS')
     );
 
     const EmbedOuvrir= config.EmbedOuvrir || {};
