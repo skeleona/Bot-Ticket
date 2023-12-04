@@ -137,7 +137,11 @@ client.on('messageCreate', async (message) => {
     message.delete();
 
     const row = new MessageActionRow().addComponents(
-      new MessageButton().setCustomId('aide').setLabel('❓ | Ouvrir un ticket').setStyle('SUCCESS')
+      new MessageButton()
+        .setCustomId('aide')
+        .setLabel('❓ | Ouvrir un ticket')
+        .setStyle('SUCCESS'),
+      
     );
 
     const EmbedOuvrir= config.EmbedOuvrir || {};
@@ -214,74 +218,10 @@ client.on('interactionCreate', async (interaction) => {
         return interaction.followUp({ content: message, ephemeral: true });
       }
     }
-
-    if (hasTicket(userId)) {
-      const message = config.ticketOuvertMessage.trim();
-      if (message) {
-        return interaction.followUp({ content: message, ephemeral: true });
-      }
-    }
-
+   
     switch (interaction.customId) {
       case 'aide':
-        const roleId1 = config.ticketRoles.role1;
-        const roleId2 = config.ticketRoles.role2;
-        const parentCatégorie= config.parentCatégorie; 
-    
-        const role1 = guild.roles.cache.get(roleId1);
-        const role2 = guild.roles.cache.get(roleId2);
-    
-        if (role1 && role2) {
-          const ticketChannel = await guild.channels.create(`ticket-${interaction.user.username}`, {
-            type: 'text',
-            parent: parentCatégorie,
-          });
-
-          await ticketChannel.permissionOverwrites.create(interaction.user, { VIEW_CHANNEL: true, SEND_MESSAGES: true });
-          await ticketChannel.permissionOverwrites.create(guild.id, { VIEW_CHANNEL: false });
-          await ticketChannel.send(`${role1},${role2}`);
-
-          tickets[ticketChannel.id] = { channelId: ticketChannel.id, par: userId };
-          await saveTickets();
-
-          const EmbedTicket = config.EmbedTicket || {};
-          const initialEmbed = new MessageEmbed()
-            .setColor(EmbedTicket.color || '')
-            .setTitle(EmbedTicket.title || '')
-            .setDescription(EmbedTicket.description || '');
-
-          const deleteButton = new MessageButton()
-            .setCustomId('suprimmer_ticket')
-            .setLabel('🗑️ | Supprimer le ticket')
-            .setStyle('DANGER');
-
-          const row = new MessageActionRow().addComponents(deleteButton);
-
-          await ticketChannel.send({ embeds: [initialEmbed], components: [row] });
-          const message = config.ticketCreationMessage.trim();
-          const replacedMessage = message.replace(/\${ticketChannelMention}/g, `<#${ticketChannel.id}>`);
-
-          if (replacedMessage) {
-            await interaction.followUp({ content: replacedMessage, ephemeral: true });
-
-            const logOuvertEmbed = new MessageEmbed()
-            .setColor("#00ff00")
-            .setTitle("Ticket Ouvert")
-            .setDescription(`Un ticket a été ouvert par ${interaction.user.tag}.`)
-            .addFields(
-            { name: "Utilisateur", value: interaction.user.tag, inline: true },
-            { name: "ID Utilisateur", value: interaction.user.id, inline: true }
-        );
-
-            const logChannelOuvert = client.channels.cache.get(config.logChannelOuvert);
-          if (logChannelOuvert) {
-            await logChannelOuvert.send({ embeds: [logOuvertEmbed] });
-            }
-          }
-        } else {
-          console.error('L\'un des deux rôles ou les deux n\'ont pas été trouvés.');
-        }
-
+        await handleTicketCreation(interaction, '1173280302110625863');
         break;
 
       default:
@@ -291,6 +231,77 @@ client.on('interactionCreate', async (interaction) => {
     console.error('Erreur lors de l\'interaction :', error.message);
   }
 });
+
+async function handleTicketCreation(interaction, categoryId) {
+
+  if (hasTicket(interaction.user.id, categoryId)) {
+    const message = config.ticketOuvertMessage.trim();
+    if (message) {
+      return interaction.followUp({ content: message, ephemeral: true });
+    }
+  }
+
+  const guild = interaction.guild;
+  const roleId1 = config.ticketRoles.role1;
+  const roleId2 = config.ticketRoles.role2;
+
+  const role1 = guild.roles.cache.get(roleId1);
+  const role2 = guild.roles.cache.get(roleId2);
+
+  const category = guild.channels.cache.get(categoryId);
+
+  if (role1 && role2 && category) {
+    const ticketChannel = await guild.channels.create(`ticket-${interaction.user.username}`, {
+      type: 'text',
+      parent: category.id,
+    });
+
+    await ticketChannel.permissionOverwrites.create(interaction.user, { VIEW_CHANNEL: true, SEND_MESSAGES: true });
+    await ticketChannel.permissionOverwrites.create(guild.id, { VIEW_CHANNEL: false });
+    await ticketChannel.send(`${role1},${role2}`);
+
+    tickets[ticketChannel.id] = { channelId: ticketChannel.id, par: interaction.user.id , categoryId: categoryId};
+    await saveTickets();
+
+    const EmbedTicket = config.EmbedTicket || {};
+    const initialEmbed = new MessageEmbed()
+      .setColor(EmbedTicket.color || '')
+      .setTitle(EmbedTicket.title || '')
+      .setDescription(EmbedTicket.description || '');
+
+    const deleteButton = new MessageButton()
+      .setCustomId('suprimmer_ticket')
+      .setLabel('🗑️ | Supprimer le ticket')
+      .setStyle('DANGER');
+
+    const row = new MessageActionRow().addComponents(deleteButton);
+
+    await ticketChannel.send({ embeds: [initialEmbed], components: [row] });
+
+    const message = config.ticketCreationMessage.trim();
+    const replacedMessage = message.replace(/\${ticketChannelMention}/g, `<#${ticketChannel.id}>`);
+
+    if (replacedMessage) {
+      await interaction.followUp({ content: replacedMessage, ephemeral: true });
+
+      const logOuvertEmbed = new MessageEmbed()
+        .setColor("#00ff00")
+        .setTitle("Ticket Ouvert")
+        .setDescription(`Un ticket a été ouvert par ${interaction.user.tag}.`)
+        .addFields(
+          { name: "Utilisateur", value: interaction.user.tag, inline: true },
+          { name: "ID Utilisateur", value: interaction.user.id, inline: true }
+        );
+
+      const logChannelOuvert = client.channels.cache.get(config.logChannelOuvert);
+      if (logChannelOuvert) {
+        await logChannelOuvert.send({ embeds: [logOuvertEmbed] });
+      }
+    }
+  } else {
+    console.error('L\'un des deux rôles ou les deux n\'ont pas été trouvés, ou la catégorie n\'a pas été trouvée.');
+  }
+}
 
 client.on('interactionCreate', async (interaction) => {
   if (interaction.isButton() && interaction.customId === 'suprimmer_ticket') {
@@ -328,10 +339,11 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
-function hasTicket(userId) {
-  return Object.values(tickets).some((ticket) => ticket.par === userId);
+function hasTicket(userId, categoryId) {
+  return Object.values(tickets).some(
+    (ticket) => ticket.par === userId && ticket.categoryId === categoryId
+  );
 }
-
 async function loadTickets() {
   const filePath = path.join(__dirname, 'tickets.json');
 
