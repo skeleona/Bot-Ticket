@@ -10,6 +10,5 @@
   "EmbedTicket": { "color": "#ffcc00", "title": "Ticket Ouvert", "description": "Un membre du personnel va bientôt vous aider. Merci de patienter." },
   "logChannelOuvert": "Le channel logs où vous voulez envoyer les tickets a été ouvert.",
   "logChannelFermé": "Le channel logs où vous voulez envoyer les tickets a été fermé.",
-  "parentCatégorie": "ID de la catégorie où vous voulez envoyer les tickets.",
   "token": "Votre token"
 }
