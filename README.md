@@ -12,7 +12,7 @@ Utilisation :
 
 Fonctionnalités :
 
-✨ Ouvrez un ticket en un clic avec le bouton "Blacklist d'un utilisateurs par l'ID. Ajoutez des utilisateurs dans le ticket et retirez les utilisateurs."
+✨ Ouvrez un ticket en un clic avec le bouton "Blacklist d'un utilisateurs par l'ID. Ajoutez des utilisateurs dans le ticket et retirez les utilisateurs à partir de l'ID."
 
 🛠️ Commandes : Configurez le préfixe dans le config.json pour que les commandes fonctionne: ticketsetup, blacklist, unblacklist, add, remove.
 
