@@ -141,7 +141,11 @@ client.on('messageCreate', async (message) => {
         .setCustomId('aide')
         .setLabel('❓ | Ouvrir un ticket')
         .setStyle('SUCCESS'),
-      
+          
+      new MessageButton()
+        .setLabel('💻 | Github')
+        .setStyle('LINK')
+        .setURL('https://github.com/skeleona')
     );
 
     const EmbedOuvrir= config.EmbedOuvrir || {};
@@ -221,8 +225,11 @@ client.on('interactionCreate', async (interaction) => {
    
     switch (interaction.customId) {
       case 'aide':
-        await handleTicketCreation(interaction, '1173280302110625863');
+        await handleTicketCreation(interaction, 'IDLacatégorie');
         break;
+      case 'exemple':
+        await handleTicketCreation(interaction, 'IDLacatégorie');
+        break;  
 
       default:
         break;
